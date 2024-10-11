@@ -37,7 +37,7 @@ std::string to_Postfix(std::string& now)
 			ans.push_back(' ');
 			op_Stack.push(now[i]);
 		}
-		else 
+		else if(now[i] == '+' || now[i] == '-' || now[i] == '*' || now[i] == '/' || now[i] == '%' || now[i] == '^')
 		{	
 			ans.push_back(' ');
 			while(get_Level(now[i]) <= get_Level(op_Stack.top()))
@@ -48,6 +48,7 @@ std::string to_Postfix(std::string& now)
 			}
 			op_Stack.push(now[i]);
 		}
+		else return "ERROR IN INFIX NOTATION";
 	}
 	while(op_Stack.top() != '#')
 	{
