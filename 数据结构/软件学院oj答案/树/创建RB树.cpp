@@ -160,7 +160,7 @@ public:
 
 
 
-	RBTNode<T>* find(T data) {
+	RBTNode<T>* search(T data) {
     	RBTNode<T> *q = this->root;
     	while (q != nullptr && q->value != data)
     	{      // 查询操作
@@ -176,41 +176,41 @@ public:
 	    return q;       // 返回结果
 	}
 
-	bool del(T data)
+	bool remove(T data)
 	{
-	    RBTNode<T> *node = find(data);
+	    RBTNode<T> *node = search(data);
 	    
 	    if (node == nullptr) 
 	    {      // 没有该元素，删除失败
 	        return false;
 	    }
-	    del_node(node);     // 删除该节点
+	    remove_node(node);     // 删除该节点
 	    return true;
 	}
-	void del_node(RBTNode<T> *del) 
+	void remove_node(RBTNode<T> *remove) 
 	{
 	    RBTNode<T> *x , *f;        // x 为最终影响了红黑树的节点，即调整开始的位置（可能为 nullptr）， f 是调整位置的父节点
-	    bool color = del->color;        // 记录最终被删除的节点的颜色
-	    if (del->left == nullptr && del->right != nullptr) 
+	    bool color = remove->color;        // 记录最终被删除的节点的颜色
+	    if (remove->left == nullptr && remove->right != nullptr) 
 	    {        // 只有右子树
-	        x = del->right;
-	        transplant(del, x);
+	        x = remove->right;
+	        transplant(remove, x);
 	        f = x->father;
 	    }
-	    else if (del->left != nullptr && del->right == nullptr) 
+	    else if (remove->left != nullptr && remove->right == nullptr) 
 	    {       // 只有左子树
-	        x = del->left;
-	        transplant(del, x);
+	        x = remove->left;
+	        transplant(remove, x);
 	        f = x->father;
 	    }
-	    else if (del->left != nullptr && del->right != nullptr) 
+	    else if (remove->left != nullptr && remove->right != nullptr) 
 	    {       // 左右子树均不为空
-	        RBTNode<T> *y = min_node(del->right);       // 找到右子树中最小的节点，用来替换 del
+	        RBTNode<T> *y = min_node(remove->right);       // 找到右子树中最小的节点，用来替换 remove
 	        color = y->color;       // 更新 color ， 因为这个时候要删除的节点是 y
-	        x = y->right;       // 此时删除 del ，用 y 去替换 del 。所以就变成了删除 y ，所以 x 和 f 都要更新
+	        x = y->right;       // 此时删除 remove ，用 y 去替换 remove 。所以就变成了删除 y ，所以 x 和 f 都要更新
 	        f = y->father;
-	        if (y->father != del) 
-	        {     // y 不是 del 的右子节点
+	        if (y->father != remove) 
+	        {     // y 不是 remove 的右子节点
 	            if (y->right != nullptr) 
 	            {      // y 的左子树必然为空，以为 y 是最左侧节点，所以此时判断 y 的右子节点是否为空
 	                transplant(y, y->right);        // 移植 y 的右子树
@@ -219,41 +219,41 @@ public:
 	            {
 	                y->father->left = nullptr;      // 此时将 y 的父节点的左子节点更新为 nullptr
 	            }
-	            y->right = del->right;      // 更新 y 的右子树
+	            y->right = remove->right;      // 更新 y 的右子树
 	            y->right->father = y;
 	        }
 	        else 
 	        {      // 否则此时的父节点为 y
 	            f = y;
 	        }
-	        transplant(del, y);     // 将 y 移植到 del 处
-	        y->left = del->left;        // 更新 y 的左子树
+	        transplant(remove, y);     // 将 y 移植到 remove 处
+	        y->left = remove->left;        // 更新 y 的左子树
 	        y->left->father = y;
-	        y->color = del->color;      // 更新 y 的颜色
+	        y->color = remove->color;      // 更新 y 的颜色
 	    }
 	    else 
-	    {      // del 的左右子树均为空
-	        if (del->father == nullptr) 
-	        {       // 如果 del 是根节点，直接将根节点设置为 nullptr
+	    {      // remove 的左右子树均为空
+	        if (remove->father == nullptr) 
+	        {       // 如果 remove 是根节点，直接将根节点设置为 nullptr
 	            this->root = nullptr;
 	            return;
 	        }
-	        else {      // 如果 del 不是根节点
+	        else {      // 如果 remove 不是根节点
 	            x = nullptr;
-	            if  (del->father->left == del) 
+	            if  (remove->father->left == remove) 
 	            {        // 更新父节点的子节点
-	                del->father->left = nullptr;
+	                remove->father->left = nullptr;
 	            }
 	            else 
 	            {
-	                del->father->right = nullptr;
+	                remove->father->right = nullptr;
 	            }
 	        }
-	        f = del->father;
+	        f = remove->father;
 	    }
 	    if (color == BLACK) 
 	    {       // 如果被删除的节点的颜色为黑色
-	        delete_fixup(x, f);        // 调整红黑树
+	        removeete_fixup(x, f);        // 调整红黑树
 	    }
 	}
 	void transplant(RBTNode<T> *u, RBTNode<T> *v) 
@@ -272,7 +272,7 @@ public:
 	        u->father->right = v;
 	    }
 	}
-	void delete_fixup(RBTNode<T> *x, RBTNode<T> *f) 
+	void removeete_fixup(RBTNode<T> *x, RBTNode<T> *f) 
 	{
 	    while (x != root && (x == nullptr || x->color == BLACK)) 
 	    {      // 需要调整的情况
@@ -408,7 +408,7 @@ int main()
 	}
 	for(int i = 0; i < M;i++)
 	{
-		rbt->del(D[i]);
+		rbt->remove(D[i]);
 	}
 	if(rbt->root)rbt->preorder(rbt->root);
 	else cout<< "Null";
