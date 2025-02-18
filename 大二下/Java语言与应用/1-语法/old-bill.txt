@@ -1,0 +1,27 @@
+import java.util.Scanner;
+public class Main
+{
+	public static void  main(String[] args)
+	{
+		Scanner s = new Scanner(System.in);
+		int n = s.nextInt();
+		int x = s.nextInt();
+		int y = s.nextInt();
+		int z = s.nextInt();
+
+		for(int i = 9;i > 0;i--)
+		{
+			for(int j = 9;j >= 0;j--)
+			{
+				int t = i * 10000 + x * 1000 + y * 100 + z * 10 + j;
+				if(t % n == 0)
+				{
+					String ans = String.format("%d %d %d",i,j,t / n);
+					System.out.print(ans);
+					return;
+				}
+			}
+		}
+		System.out.print(0);
+	}
+}
