@@ -1,0 +1,53 @@
+import java.util.Scanner;
+
+class ThreeDLottery{
+	static int[] award = {1040,345,172,104,69,49,37,29,23,19,16,15,15,14};
+	private int[] winNumber;
+	ThreeDLottery(int[] winNumber){
+		this.winNumber=winNumber;
+	}
+	
+	public int[] getWinNumber() {
+		return winNumber;
+	}
+	int getWins(int[] userNumber){
+		int win = 0,user = 0;
+		for(int i:userNumber)
+		{
+			user += i;
+		}
+		for(int i:winNumber)
+		{
+			win += i;	
+		}
+		if(user == win)
+		{
+			return win > 13 ? award[27-win]:award[win];
+		}
+		//在此实现彩票金额返回
+		return 0;
+	}
+}
+public class Main {
+
+	public static void main(String [] arg){
+		//在此实现测试代码
+		Scanner cin = new Scanner(System.in);
+		int[] winNumber = new int[3];
+		String temp;
+		temp = cin.next();
+		for(int i = 0;i < 3;i++)
+		{
+			winNumber[i] = temp.charAt(i) - '0';
+		}
+		int[] userNumber = new int[3];
+		temp = cin.next();
+		for(int i = 0;i < 3;i++)
+		{
+			userNumber[i] = temp.charAt(i) - '0';
+		}
+		ThreeDLottery man = new ThreeDLottery(winNumber);
+		System.out.print(man.getWins(userNumber));
+
+	}
+}
