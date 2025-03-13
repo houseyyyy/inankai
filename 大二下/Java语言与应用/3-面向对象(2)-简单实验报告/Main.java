@@ -300,6 +300,7 @@ class LotteryTestModule {
         int[] winNumber = new int[3];
         System.out.println("投注方式有如下几种:");
         System.out.println("single group oned guess1d towd guess2d general sum package tractor guessSize guessThreeSame guessParity");
+        System.out.println("若想退出,请输入quitgame\n");
         while (true) {
             System.out.println("请输入投注方式");
             for(int i = 0;i < 3;i++)
@@ -357,6 +358,9 @@ class LotteryTestModule {
                 case "guessParity":
                     gambler = new GuessPartiyMode(winNumber);
                     break;
+                case "quitgame":
+                    System.out.println("成功退出");
+                    return;
                 default:
                     System.out.println("您输入的投注方式不存在，请重新输入");
                     continue;
@@ -376,6 +380,11 @@ class LotteryTestModule {
                 while(true)
                 {
                     temp = cin.next();
+                    if(temp.intern() == "quitgame")
+                    {
+                        System.out.println("成功退出");
+                        return;
+                    }
                     if(gambler.isAvailable(temp,userloop) == false)
                     {
                         System.out.println("请输入正确的投注内容");
