@@ -1,0 +1,23 @@
+# from __future__ import print_function
+import torch
+x = torch.empty(5,3)
+x = torch.rand(5,3)
+x = torch.rand(5,3,4)
+x = torch.zeros(5,3,dtype = torch.long)
+x = torch.tensor([5.5,3])
+x = x.new_ones(5,3,dtype = torch.double)
+x= torch.randn_like(x,dtype=torch.float)
+tensor4= torch.rand(5,3)
+tensor4.add_(x)
+#可以改变 tensor 变量的操作都带有一个后缀 _
+x = torch.randn(4,4) #N(0,1)
+y = torch.rand(4,4) #[0,1)
+y = x.view(16)
+z = x.view(-1,8)
+x = torch.randn(1)
+y = x.numpy()
+a = torch.ones(5)
+b = a.numpy()
+print(a,b)
+a.add_(1)
+print(a,b)
