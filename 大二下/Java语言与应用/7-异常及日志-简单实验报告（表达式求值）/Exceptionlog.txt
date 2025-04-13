@@ -1,0 +1,6 @@
+4月 13, 2025 3:29:18 下午 Main main
+信息: wrong - variable undefined
+4月 13, 2025 3:29:19 下午 Fix result
+信息: wrong - error expression
+4月 13, 2025 3:29:19 下午 Main main
+信息: wrong - variable unassigned
